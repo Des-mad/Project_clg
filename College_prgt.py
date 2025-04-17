@@ -51,3 +51,21 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 print(classification_report(y_test,y_pred))
+
+# Load model from save file
+svm_model = joblib.load('svm_lightning.pkl')
+
+# Predicting if Thunder is present in a given audio clip
+data_loc = "/content/beautiful-random-minor-arp-119378 (1).mp3"
+extract_features(data_loc)
+New_data_features = np.array(extract_features(data_loc))
+print(New_data_features)
+New_data_features1=New_data_features.reshape(-20,20)
+y_pred = svm_model.predict(New_data_features1)
+print(y_pred)
+for i in y_pred:
+  if i=="Thunder":
+    print("Thunderstorm Detected")
+  else:
+    print("Thunderstorm not Detected")
+
